@@ -1,0 +1,784 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tracue — Find the customers your product was built for</title>
+<meta name="description" content="Tracue is the go-to-market intelligence platform for product teams: discover companies and decision-makers, verify every email, and reach the customers your product was built for. Launching March 2027.">
+<meta property="og:title" content="Tracue — Find the customers your product was built for">
+<meta property="og:description" content="Discover, verify and reach your ideal customers. Pre-launch — v1.0 ships March 2027. Join the waitlist.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tracue.com/">
+<meta name="theme-color" content="#080D10">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600&family=Bricolage+Grotesque:opsz,wght@12..96,300..700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#080D10;
+  --ink-2:#11181C;
+  --ink-3:#1A2328;
+  --paper:#FFFFFF;
+  --paper-2:#F8F8F8;
+  --slate:#4A5464;
+  --line-dark:rgba(255,255,255,.08);
+  --line-light:rgba(8,13,16,.08);
+  --muted-dark:rgba(255,254,253,.6);
+  --muted-dark-2:rgba(255,254,253,.4);
+  --muted-light:rgba(8,13,16,.6);
+  --accent:#FF7A00;
+  --accent-soft:#FFB27A;
+  --peach:#F6C3A1;
+  --ok:#3DDC97;
+  --display:"Bricolage Grotesque",Arial,sans-serif;
+  --text:"Albert Sans",Arial,sans-serif;
+  --wrap:1280px;
+  --gutter:clamp(16px,4vw,48px);
+  --r-xl:clamp(36px,6vw,80px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--text);background:var(--ink);color:var(--paper);font-size:16px;line-height:1.5;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img,svg,canvas{display:block}
+button,input,select{font:inherit;color:inherit}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--gutter)}
+.label{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:2.1px;text-transform:uppercase;color:var(--muted-dark)}
+.light .label{color:var(--muted-light)}
+.h-xl{font-family:var(--display);font-weight:400;font-size:clamp(44px,7.4vw,108px);line-height:.98;letter-spacing:-.03em}
+.h-l{font-family:var(--display);font-weight:420;font-size:clamp(34px,4.8vw,68px);line-height:1.12;letter-spacing:-.01em}
+.h-m{font-family:var(--text);font-weight:400;font-size:clamp(22px,2.4vw,32px);line-height:1.3;letter-spacing:-.03em}
+.accent{color:var(--accent)}
+.muted{color:var(--muted-dark)}
+.light .muted{color:var(--muted-light)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 24px;border-radius:8px;font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:2.1px;text-transform:uppercase;cursor:pointer;border:1px solid transparent;transition:transform .25s ease,background .25s ease,color .25s ease,border-color .25s ease;white-space:nowrap}
+.btn .arr{transition:transform .25s ease}
+.btn:hover .arr{transform:translateX(4px)}
+.btn-white{background:var(--paper);color:var(--ink)}
+.btn-white:hover{background:var(--accent);color:var(--paper)}
+.btn-ghost{border-color:rgba(255,255,255,.2);color:var(--paper)}
+.btn-ghost:hover{border-color:var(--paper)}
+.btn-peach{background:var(--peach);color:var(--ink);height:44px;font-size:12px}
+.btn-peach:hover{background:var(--accent);color:var(--paper)}
+.btn-ink{background:var(--ink);color:var(--paper)}
+.btn-ink:hover{background:var(--accent)}
+
+/* nav */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .3s ease,backdrop-filter .3s ease}
+.nav.scrolled{background:rgba(8,13,16,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line-dark)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:76px}
+.logo{display:flex;align-items:center;gap:8px;font-family:var(--display);font-weight:600;font-size:24px;letter-spacing:-.04em}
+.logo svg{width:22px;height:22px}
+.nav-links{display:flex;gap:36px}
+.nav-links a{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:2.1px;text-transform:uppercase;color:rgba(255,255,255,.85);transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+.nav .btn{height:44px;padding:0 18px}
+.burger{display:none;width:44px;height:44px;border-radius:8px;background:var(--ink-3);border:0;cursor:pointer;align-items:center;justify-content:center}
+.burger span{display:block;width:16px;height:1.5px;background:#fff;box-shadow:0 5px 0 #fff}
+.mobile-menu{display:none}
+
+/* hero */
+.hero{position:relative;min-height:100vh;padding:150px 0 0;overflow:hidden}
+#signal{position:absolute;inset:0;width:100%;height:100%;opacity:.9}
+.hero::after{content:"";position:absolute;inset:auto 0 0 0;height:40%;background:linear-gradient(transparent,var(--ink));pointer-events:none}
+.hero .wrap{position:relative;z-index:2}
+.pill{display:inline-flex;align-items:center;gap:10px;padding:8px 14px 8px 10px;border:1px solid var(--line-dark);border-radius:100px;background:rgba(255,255,255,.03);backdrop-filter:blur(6px)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 rgba(255,122,0,.6);animation:ping 2s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(255,122,0,.55)}80%,100%{box-shadow:0 0 0 10px rgba(255,122,0,0)}}
+.hero h1{margin:28px 0 28px;max-width:13ch}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero-sub{max-width:620px;font-size:clamp(17px,1.5vw,20px);line-height:1.55;color:var(--muted-dark)}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:40px}
+
+/* product mock */
+.mock{position:relative;margin:80px auto 0;max-width:1100px;border-radius:16px;background:linear-gradient(180deg,#121A1F,#0C1216);border:1px solid rgba(255,255,255,.1);box-shadow:0 40px 120px -20px rgba(255,122,0,.18),0 0 0 1px rgba(255,255,255,.02);overflow:hidden;transform:perspective(1600px) rotateX(8deg);transform-origin:top center;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.mock.in{transform:perspective(1600px) rotateX(0deg)}
+.mock-bar{display:flex;align-items:center;gap:8px;padding:14px 18px;border-bottom:1px solid var(--line-dark)}
+.mock-bar i{width:10px;height:10px;border-radius:50%;background:#2A3439}
+.mock-bar .url{margin-left:14px;font-size:12px;color:var(--muted-dark-2);font-family:var(--display);letter-spacing:.5px}
+.mock-body{display:grid;grid-template-columns:220px 1fr}
+.mock-side{padding:20px;border-right:1px solid var(--line-dark);display:flex;flex-direction:column;gap:6px}
+.mock-side .lab{font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:var(--muted-dark-2);font-family:var(--display);font-weight:600;margin:10px 0 4px}
+.mock-side a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;font-size:14px;color:var(--muted-dark)}
+.mock-side a.on{background:rgba(255,255,255,.06);color:#fff}
+.mock-side a b{width:6px;height:6px;border-radius:2px;background:currentColor;opacity:.6}
+.mock-main{padding:22px}
+.query{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid var(--line-dark);font-size:14px}
+.query svg{width:16px;height:16px;opacity:.6;flex:none}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:100px;background:rgba(255,255,255,.06);font-size:12px;color:rgba(255,255,255,.85);white-space:nowrap}
+.chip.o{background:rgba(255,122,0,.14);color:var(--accent-soft)}
+.chip.g{background:rgba(61,220,151,.12);color:var(--ok)}
+.caret{display:inline-block;width:1px;height:16px;background:var(--accent);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.mock-meta{display:flex;justify-content:space-between;align-items:center;margin:18px 0 10px;font-size:13px;color:var(--muted-dark)}
+.rows{display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:1.6fr 1.3fr 1.2fr .9fr 60px;align-items:center;gap:14px;padding:13px 10px;border-top:1px solid var(--line-dark);font-size:14px;opacity:0;transform:translateY(8px);transition:opacity .5s ease,transform .5s ease}
+.mock.in .row{opacity:1;transform:none}
+.row.head{opacity:1;transform:none;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted-dark-2);font-family:var(--display);font-weight:600;border-top:0}
+.co{display:flex;align-items:center;gap:10px;min-width:0}
+.co i{flex:none;width:28px;height:28px;border-radius:7px;display:grid;place-items:center;font-style:normal;font-weight:600;font-size:12px;color:#fff}
+.co span{display:flex;flex-direction:column;min-width:0}
+.co small{color:var(--muted-dark-2);font-size:12px}
+.person small{display:block;color:var(--muted-dark-2);font-size:12px}
+.score{font-family:var(--display);font-weight:600;font-size:16px;text-align:right}
+.score.hi{color:var(--accent)}
+
+/* intro (dark) */
+.intro{padding:140px 0 0}
+.intro-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:60px;align-items:start}
+.intro-grid .h-m{color:#fff}
+.backed{margin-top:90px}
+.chips-row{display:grid;grid-template-columns:repeat(4,1fr);margin-top:24px;border-top:1px solid var(--line-dark);border-left:1px solid var(--line-dark)}
+.chips-row div{padding:30px 20px;border-right:1px solid var(--line-dark);border-bottom:1px solid var(--line-dark);text-align:center;font-family:var(--display);font-weight:500;font-size:18px;color:rgba(255,255,255,.75);letter-spacing:-.01em;transition:color .2s,background .2s}
+.chips-row div:hover{color:#fff;background:rgba(255,255,255,.02)}
+.chips-row div small{display:block;margin-top:4px;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted-dark-2);font-weight:600}
+
+.numbers{background:var(--ink);padding:100px 0 120px;border-radius:0 0 var(--r-xl) var(--r-xl);position:relative;z-index:2}
+.num-grid{display:grid;grid-template-columns:repeat(4,1fr);margin-top:30px}
+.num{padding:34px 24px;border-left:1px solid var(--line-dark)}
+.num:first-child{border-left:0;padding-left:0}
+.num strong{display:block;font-family:var(--text);font-weight:400;font-size:clamp(40px,4.4vw,64px);letter-spacing:-.04em;line-height:1}
+.num p{margin-top:12px;font-size:14px;color:var(--muted-dark);max-width:220px}
+.footnote{margin-top:28px;font-size:12px;color:var(--muted-dark-2)}
+
+/* light sections */
+.light{background:var(--paper);color:var(--ink)}
+.pains{padding:calc(var(--r-xl) + 100px) 0 120px;margin-top:calc(var(--r-xl) * -1)}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:40px;flex-wrap:wrap;margin-bottom:60px}
+.sec-head .h-l{max-width:14ch}
+.sec-head p{max-width:420px}
+.pain{display:grid;grid-template-columns:260px 1fr 300px;gap:40px;padding:44px 0;border-top:1px solid var(--line-light);align-items:start}
+.pain:last-child{border-bottom:1px solid var(--line-light)}
+.pain .q{font-size:15px;line-height:1.45;color:var(--ink)}
+.pain .a{font-family:var(--text);font-size:clamp(20px,2vw,28px);line-height:1.38;letter-spacing:-.025em;color:var(--muted-light);transition:color .4s}
+.pain:hover .a{color:var(--ink)}
+.pain .a b{font-weight:400;color:var(--ink)}
+.pain .btn{margin-top:28px}
+.pain-vis{height:180px;border-radius:12px;background:var(--paper-2);border:1px solid var(--line-light);position:relative;overflow:hidden;padding:18px;display:flex;flex-direction:column;justify-content:space-between}
+.pain-vis .big{font-family:var(--display);font-size:52px;font-weight:400;letter-spacing:-.04em;line-height:1}
+.pain-vis .cap{font-size:13px;color:var(--muted-light)}
+.bar{height:6px;border-radius:6px;background:rgba(8,13,16,.08);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:6px;transition:width 1.4s cubic-bezier(.2,.7,.2,1)}
+.reveal.in .bar i{width:var(--w)}
+
+/* platform */
+.platform{padding:40px 0 140px}
+.mods{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line-light);border-left:1px solid var(--line-light)}
+.mod{position:relative;padding:40px 34px 44px;border-right:1px solid var(--line-light);border-bottom:1px solid var(--line-light);min-height:320px;display:flex;flex-direction:column;overflow:hidden;transition:background .35s}
+.mod::before{content:"";position:absolute;inset:auto -40% -60% auto;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,0,.18),transparent 70%);opacity:0;transition:opacity .4s}
+.mod:hover{background:var(--paper-2)}
+.mod:hover::before{opacity:1}
+.mod .n{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:2.1px;color:var(--accent)}
+.mod h3{font-family:var(--display);font-weight:450;font-size:34px;letter-spacing:-.02em;margin:22px 0 14px}
+.mod p{color:var(--muted-light);font-size:16px;line-height:1.55}
+.mod .tags{margin-top:auto;padding-top:28px;display:flex;gap:6px;flex-wrap:wrap}
+.mod .tags span{font-size:12px;padding:5px 10px;border-radius:100px;border:1px solid var(--line-light);color:var(--slate)}
+.mod .soon{position:absolute;top:40px;right:34px;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;font-family:var(--display);font-weight:600;color:var(--slate)}
+
+/* steps */
+.steps{padding:0 0 140px}
+.step-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.step{border-radius:12px;background:var(--paper-2);padding:34px;min-height:340px;display:flex;flex-direction:column}
+.step .k{width:44px;height:44px;border-radius:50%;border:1px solid var(--line-light);display:grid;place-items:center;font-family:var(--display);font-weight:600}
+.step h3{font-family:var(--display);font-weight:450;font-size:28px;letter-spacing:-.02em;margin:auto 0 12px;padding-top:40px}
+.step p{color:var(--muted-light)}
+.step.dark{background:var(--ink);color:#fff}
+.step.dark p{color:var(--muted-dark)}
+.step.dark .k{border-color:var(--line-dark);background:var(--accent);color:#fff;border:0}
+
+/* engine (dark, rounded) */
+.engine{background:var(--ink);border-radius:var(--r-xl);padding:120px 0;margin:0 clamp(0px,1vw,16px)}
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:70px;position:relative}
+.pipe::before{content:"";position:absolute;left:10%;right:10%;top:32px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,122,0,.6),transparent)}
+.stage{text-align:center;padding:0 14px;position:relative}
+.stage .o{width:64px;height:64px;margin:0 auto 24px;border-radius:50%;background:var(--ink-3);border:1px solid rgba(255,255,255,.12);display:grid;place-items:center;position:relative;z-index:1}
+.stage .o svg{width:26px;height:26px;stroke:var(--accent);fill:none;stroke-width:1.6}
+.stage h4{font-family:var(--display);font-weight:500;font-size:20px;margin-bottom:8px}
+.stage p{font-size:14px;color:var(--muted-dark)}
+.packet{position:absolute;top:28px;left:10%;width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 18px 4px rgba(255,122,0,.6);animation:flow 5s linear infinite;z-index:2}
+.packet:nth-child(2){animation-delay:-1.7s}
+.packet:nth-child(3){animation-delay:-3.4s}
+@keyframes flow{0%{left:10%;opacity:0}8%{opacity:1}92%{opacity:1}100%{left:90%;opacity:0}}
+.specs{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:90px}
+.spec{border:1px solid var(--line-dark);border-radius:12px;padding:30px}
+.spec h5{font-family:var(--display);font-weight:500;font-size:20px;margin:16px 0 10px}
+.spec p{font-size:15px;color:var(--muted-dark)}
+.spec ul{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:8px;font-size:14px;color:rgba(255,255,255,.8)}
+.spec li::before{content:"→";color:var(--accent);margin-right:8px}
+
+/* roadmap */
+.roadmap{padding:140px 0}
+.track{position:relative;margin-top:70px}
+.track-line{position:absolute;left:0;right:0;top:15px;height:2px;background:var(--line-light);border-radius:2px}
+.track-line i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--accent);border-radius:2px;transition:width 2s cubic-bezier(.2,.7,.2,1)}
+.reveal.in .track-line i{width:var(--progress)}
+.phases{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;position:relative}
+.phase{padding-top:52px;position:relative}
+.phase::before{content:"";position:absolute;top:8px;left:0;width:16px;height:16px;border-radius:50%;background:var(--paper);border:2px solid rgba(8,13,16,.2)}
+.phase.done::before{background:var(--accent);border-color:var(--accent)}
+.phase.now::before{background:var(--paper);border-color:var(--accent);box-shadow:0 0 0 6px rgba(255,122,0,.18)}
+.phase .when{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:var(--slate)}
+.phase h4{font-family:var(--display);font-weight:500;font-size:22px;letter-spacing:-.02em;margin:10px 0 10px;line-height:1.15}
+.phase ul{list-style:none;display:flex;flex-direction:column;gap:7px;font-size:14px;color:var(--muted-light);line-height:1.4}
+.status{display:inline-block;margin-top:14px;font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;font-family:var(--display);padding:5px 10px;border-radius:100px;background:rgba(8,13,16,.05);color:var(--slate)}
+.done .status{background:rgba(255,122,0,.12);color:#C25A00}
+.now .status{background:var(--ink);color:#fff}
+.phase.launch{background:var(--ink);color:#fff;border-radius:12px;padding:52px 18px 22px;margin-top:-0px}
+.phase.launch::before{left:18px;background:var(--ink);border-color:var(--accent)}
+.phase.launch ul{color:var(--muted-dark)}
+.phase.launch .when{color:var(--accent)}
+.phase.launch .status{background:var(--accent);color:#fff}
+
+/* compare */
+.compare{padding:0 0 140px}
+.table{border-top:1px solid var(--line-light)}
+.trow{display:grid;grid-template-columns:1fr 1.2fr 1.2fr;gap:30px;padding:24px 0;border-bottom:1px solid var(--line-light);align-items:center}
+.trow.th{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:2.1px;text-transform:uppercase;color:var(--muted-light)}
+.trow .k{font-family:var(--display);font-weight:500;font-size:19px}
+.trow .old{color:var(--muted-light);text-decoration:line-through;text-decoration-color:rgba(8,13,16,.25)}
+.trow .new{display:flex;gap:10px;align-items:start}
+.trow .new::before{content:"";flex:none;width:18px;height:18px;margin-top:3px;border-radius:50%;background:var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3'%3E%3Cpath d='M6 12l4 4 8-8'/%3E%3C/svg%3E") center/12px no-repeat}
+
+/* founding */
+.founding{padding:0 0 140px}
+.found-card{border-radius:24px;background:var(--paper-2);display:grid;grid-template-columns:1.1fr 1fr;overflow:hidden}
+.found-l{padding:clamp(32px,5vw,64px)}
+.found-l .h-l{margin:20px 0 22px}
+.perks{display:flex;flex-direction:column}
+.perk{padding:28px clamp(24px,4vw,48px);border-top:1px solid var(--line-light);display:flex;gap:20px;align-items:start}
+.perk:first-child{border-top:0}
+.perk .pn{font-family:var(--display);font-weight:400;font-size:44px;letter-spacing:-.04em;color:var(--accent);line-height:1;min-width:110px}
+.perk h5{font-family:var(--display);font-weight:500;font-size:19px;margin-bottom:6px}
+.perk p{color:var(--muted-light);font-size:15px}
+.found-r{background:var(--ink);color:#fff;padding:clamp(28px,4vw,48px);display:flex;flex-direction:column;justify-content:center}
+.seats{margin-top:26px}
+.seats .bar{background:rgba(255,255,255,.1);height:8px}
+.seats .lbls{display:flex;justify-content:space-between;margin-top:10px;font-size:13px;color:var(--muted-dark)}
+
+/* faq */
+.faq{padding:0 0 160px}
+.faq-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:60px}
+details{border-top:1px solid var(--line-light)}
+details:last-child{border-bottom:1px solid var(--line-light)}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:26px 0;font-family:var(--display);font-weight:450;font-size:clamp(18px,1.6vw,22px);letter-spacing:-.01em}
+summary::-webkit-details-marker{display:none}
+summary .pm{flex:none;width:32px;height:32px;border-radius:50%;border:1px solid var(--line-light);display:grid;place-items:center;transition:transform .3s,background .3s,color .3s}
+details[open] summary .pm{transform:rotate(45deg);background:var(--ink);color:#fff}
+details p{padding:0 50px 28px 0;color:var(--muted-light);font-size:16px;line-height:1.6}
+
+/* cta */
+.cta{background:var(--ink);border-radius:var(--r-xl) var(--r-xl) 0 0;padding:140px 0 100px;margin-top:calc(var(--r-xl) * -1);position:relative;overflow:hidden}
+.cta .glow{position:absolute;left:50%;top:-30%;width:900px;height:900px;transform:translateX(-50%);background:radial-gradient(circle,rgba(255,122,0,.22),transparent 60%);pointer-events:none}
+.cta-in{position:relative;text-align:center;display:flex;flex-direction:column;align-items:center}
+.cta .h-xl{max-width:12ch;margin:26px 0 22px}
+.cta-sub{max-width:560px;color:var(--muted-dark);font-size:18px}
+form.wl{margin-top:44px;display:grid;grid-template-columns:1fr 1fr auto;gap:10px;width:100%;max-width:760px;padding:8px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--line-dark)}
+form.wl input{height:52px;padding:0 18px;border-radius:8px;border:1px solid transparent;background:rgba(255,255,255,.05);outline:none;min-width:0;transition:border-color .2s}
+form.wl input::placeholder{color:var(--muted-dark-2)}
+form.wl input:focus{border-color:var(--accent)}
+.form-note{margin-top:16px;font-size:13px;color:var(--muted-dark-2);min-height:20px}
+.form-note.ok{color:var(--ok)}
+
+/* footer */
+footer{background:var(--ink);padding:80px 0 40px;border-top:1px solid var(--line-dark)}
+.foot{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:40px}
+.foot p{color:var(--muted-dark);margin-top:16px;max-width:320px;font-size:15px}
+.foot h6{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted-dark-2);margin-bottom:18px}
+.foot ul{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:15px;color:rgba(255,255,255,.8)}
+.foot a:hover{color:var(--accent)}
+.giant{font-family:var(--display);font-weight:600;font-size:clamp(90px,24vw,360px);letter-spacing:-.07em;line-height:.8;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.12);margin:80px 0 30px;user-select:none;white-space:nowrap;overflow:hidden}
+.legal{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:13px;color:var(--muted-dark-2)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+  .mock{transform:none}
+  .mock .row{opacity:1;transform:none}
+}
+
+/* responsive */
+@media (max-width:1100px){
+  .phases{grid-template-columns:repeat(3,1fr);row-gap:40px}
+  .track-line{display:none}
+  .pain{grid-template-columns:200px 1fr}
+  .pain-vis{display:none}
+}
+@media (max-width:900px){
+  .nav-links,.nav .btn{display:none}
+  .burger{display:flex}
+  .mobile-menu{position:fixed;inset:76px 0 auto 0;z-index:49;background:var(--ink);border-bottom:1px solid var(--line-dark);padding:10px var(--gutter) 24px;flex-direction:column}
+  .mobile-menu.open{display:flex}
+  .mobile-menu a{padding:16px 0;border-bottom:1px solid var(--line-dark);font-family:var(--display);font-weight:600;letter-spacing:2px;text-transform:uppercase;font-size:14px}
+  .mobile-menu .btn{margin-top:18px;justify-content:center}
+  .intro-grid,.faq-grid,.found-card{grid-template-columns:1fr}
+  .chips-row{grid-template-columns:repeat(2,1fr)}
+  .num-grid{grid-template-columns:repeat(2,1fr)}
+  .num{border-left:0;padding-left:0;border-top:1px solid var(--line-dark)}
+  .mods,.step-grid,.specs{grid-template-columns:1fr}
+  .mod{min-height:0}
+  .pipe{grid-template-columns:1fr;gap:34px}
+  .pipe::before,.packet{display:none}
+  .mock-body{grid-template-columns:1fr}
+  .mock-side{display:none}
+  .row{grid-template-columns:1.5fr 1fr 50px}
+  .row .person,.row .sig{display:none}
+}
+@media (max-width:640px){
+  .hero{padding-top:120px}
+  .mock{margin-top:56px}
+  .phases{grid-template-columns:1fr}
+  .pain{grid-template-columns:1fr;gap:16px}
+  .trow{grid-template-columns:1fr;gap:8px}
+  .trow.th{display:none}
+  form.wl{grid-template-columns:1fr}
+  .foot{grid-template-columns:1fr 1fr}
+  .foot>div:first-child{grid-column:1/-1}
+  .perk{flex-direction:column;gap:8px}
+  .btn{height:48px;padding:0 18px}
+  .hero-cta .btn{flex:1;justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a href="#top" class="logo" aria-label="Tracue home">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="#FF7A00" stroke-width="2" stroke-dasharray="47 16" transform="rotate(-50 12 12)"/><circle cx="12" cy="12" r="4.2" fill="#FF7A00"/></svg>
+      tracue
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#platform">Platform</a>
+      <a href="#engine">Data engine</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#founding">Early access</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a href="#waitlist" class="btn btn-white">Join waitlist <span class="arr">→</span></a>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span></button>
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#platform">Platform</a>
+  <a href="#engine">Data engine</a>
+  <a href="#roadmap">Roadmap</a>
+  <a href="#founding">Early access</a>
+  <a href="#faq">FAQ</a>
+  <a href="#waitlist" class="btn btn-white">Join waitlist →</a>
+</div>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="signal" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <span class="pill label"><span class="dot"></span>Pre-launch · v1.0 ships March 2027</span>
+    <h1 class="h-xl">Find the customers your product was <em>built for.</em></h1>
+    <p class="hero-sub">Tracue is the go-to-market intelligence layer for teams that build products. We turn the noisy public web into a clean, verified map of companies and decision-makers — so you stop guessing who to sell to and start talking to them.</p>
+    <div class="hero-cta">
+      <a href="#waitlist" class="btn btn-white">Get early access <span class="arr">→</span></a>
+      <a href="#roadmap" class="btn btn-ghost">See the roadmap</a>
+    </div>
+
+    <div class="mock" id="mock" aria-label="Preview of the Tracue app (concept)">
+      <div class="mock-bar"><i></i><i></i><i></i><span class="url">app.tracue.com / discover</span></div>
+      <div class="mock-body">
+        <aside class="mock-side">
+          <div class="lab">Workspace</div>
+          <a class="on"><b></b>Discover</a>
+          <a><b></b>Lists</a>
+          <a><b></b>Signals</a>
+          <a><b></b>Sequences</a>
+          <div class="lab">Saved ICPs</div>
+          <a><b></b>SaaS · SEA · Series A</a>
+          <a><b></b>Fintech · hiring eng</a>
+          <a><b></b>E-com · Shopify Plus</a>
+        </aside>
+        <div class="mock-main">
+          <div class="query">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            <span class="chip">B2B SaaS</span><span class="chip">Southeast Asia</span><span class="chip">50–500 employees</span><span class="chip o">Hiring engineers</span><span id="typed"></span><span class="caret"></span>
+          </div>
+          <div class="mock-meta"><span><b style="color:#fff">2,318</b> companies · <b style="color:#fff">9,746</b> verified contacts</span><span class="chip g">● Live</span></div>
+          <div class="rows">
+            <div class="row head"><span>Company</span><span class="person">Decision-maker</span><span class="sig">Signal</span><span>Email</span><span style="text-align:right">Fit</span></div>
+            <div class="row" style="transition-delay:.1s"><div class="co"><i style="background:#3B5BDB">N</i><span>Northwind Labs<small>northwind.io</small></span></div><div class="person">Linh Tran<small>VP Engineering</small></div><div class="sig"><span class="chip o">Raised Series A</span></div><div><span class="chip g">✓ Verified</span></div><div class="score hi">96</div></div>
+            <div class="row" style="transition-delay:.2s"><div class="co"><i style="background:#0CA678">K</i><span>Kestrel Pay<small>kestrelpay.com</small></span></div><div class="person">Arjun Mehta<small>Head of Product</small></div><div class="sig"><span class="chip o">Hiring 12 eng</span></div><div><span class="chip g">✓ Verified</span></div><div class="score hi">93</div></div>
+            <div class="row" style="transition-delay:.3s"><div class="co"><i style="background:#E8590C">O</i><span>Orbit Commerce<small>orbitcommerce.co</small></span></div><div class="person">Mai Nguyen<small>CTO</small></div><div class="sig"><span class="chip">New CTO · 30d</span></div><div><span class="chip g">✓ Verified</span></div><div class="score">88</div></div>
+            <div class="row" style="transition-delay:.4s"><div class="co"><i style="background:#7048E8">L</i><span>Lumen Health<small>lumenhealth.app</small></span></div><div class="person">Daniel Koh<small>COO</small></div><div class="sig"><span class="chip">Stack: HubSpot</span></div><div><span class="chip">◐ Catch-all</span></div><div class="score">81</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTRO + NUMBERS (dark) -->
+<section class="intro">
+  <div class="wrap">
+    <div class="intro-grid reveal">
+      <span class="label">Why we exist</span>
+      <p class="h-m">Great products die quietly — not because they're bad, but because they never reach the people who need them. Tracue is a startup founded in August 2026 to fix that: one platform to <span class="accent">discover, verify and reach</span> your ideal customers, built for teams that would rather ship than scrape spreadsheets.</p>
+    </div>
+    <div class="backed reveal">
+      <span class="label">Designed to plug into the stack you already use</span>
+      <div class="chips-row">
+        <div>HubSpot<small>CRM sync · planned</small></div>
+        <div>Salesforce<small>CRM sync · planned</small></div>
+        <div>Gmail &amp; Outlook<small>Outreach · planned</small></div>
+        <div>Slack<small>Signal alerts · planned</small></div>
+        <div>Zapier &amp; Make<small>Automation · planned</small></div>
+        <div>Google Sheets<small>Export · planned</small></div>
+        <div>REST API<small>Enrichment · alpha</small></div>
+        <div>Chrome<small>Extension · beta</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="numbers">
+  <div class="wrap reveal">
+    <span class="label">Tracue at launch — what we're building toward</span>
+    <div class="num-grid">
+      <div class="num"><strong data-count="250" data-suffix="M+">0</strong><p>company &amp; contact records in the index</p></div>
+      <div class="num"><strong data-count="98" data-suffix="%">0</strong><p>deliverability target on verified emails</p></div>
+      <div class="num"><strong data-count="60" data-suffix="+">0</strong><p>buying signals tracked — hiring, funding, tech stack, leadership moves</p></div>
+      <div class="num"><strong data-count="30" data-suffix=" days">0</strong><p>maximum age of any verified record before it is re-checked</p></div>
+    </div>
+    <p class="footnote">* Launch targets for v1.0 (March 2027). We'll publish real numbers as we hit them.</p>
+  </div>
+</section>
+
+<!-- PAINS (light) -->
+<section class="light pains" id="why">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2 class="h-l">Sound familiar?</h2>
+      <p class="muted">We talked to founders, product leads and sales teams before writing a line of code. The same four problems came up every time.</p>
+    </div>
+
+    <div class="pain reveal">
+      <p class="q">You've built something great — but your pipeline is empty?</p>
+      <div>
+        <p class="a">Describe your ideal customer in plain language. Tracue maps it to <b>every matching company and the exact people who make the decision</b> — filtered by industry, size, stack, region and live buying signals.</p>
+        <a href="#platform" class="btn btn-peach">Discover accounts <span class="arr">→</span></a>
+      </div>
+      <div class="pain-vis"><span class="cap">Matching accounts found</span><span class="big">2,318</span><div class="bar"><i style="--w:78%"></i></div></div>
+    </div>
+
+    <div class="pain reveal">
+      <p class="q">Half your cold emails bounce before anyone reads them?</p>
+      <div>
+        <p class="a">Every address is checked at the <b>domain, mail-server and mailbox level</b> before it ever reaches you — MX, SPF, DMARC, catch-all and disposable detection included. Protect your sender reputation by default.</p>
+        <a href="#engine" class="btn btn-peach">How we verify <span class="arr">→</span></a>
+      </div>
+      <div class="pain-vis"><span class="cap">Bounce rate, before → after</span><span class="big">31% → <span class="accent">2%</span></span><div class="bar"><i style="--w:96%"></i></div></div>
+    </div>
+
+    <div class="pain reveal">
+      <p class="q">Your data vendor costs more than your first engineer?</p>
+      <div>
+        <p class="a">Legacy platforms lock you into annual, per-seat contracts. Tracue is <b>usage-based and starts free</b> — pay for the verified contacts you actually use, not for logins.</p>
+        <a href="#founding" class="btn btn-peach">Founding pricing <span class="arr">→</span></a>
+      </div>
+      <div class="pain-vis"><span class="cap">Contract lock-in</span><span class="big">0 <span style="font-size:20px">months</span></span><div class="bar"><i style="--w:12%"></i></div></div>
+    </div>
+
+    <div class="pain reveal">
+      <p class="q">Your CRM is a graveyard of stale contacts?</p>
+      <div>
+        <p class="a">People change jobs; companies pivot. Tracue <b>continuously re-verifies and enriches</b> the records you already have and tells you the moment a champion moves or an account heats up.</p>
+        <a href="#platform" class="btn btn-peach">Keep data fresh <span class="arr">→</span></a>
+      </div>
+      <div class="pain-vis"><span class="cap">Records refreshed this month</span><span class="big">100%</span><div class="bar"><i style="--w:100%"></i></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORM -->
+<section class="light platform" id="platform">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="label">The platform</span>
+        <h2 class="h-l" style="margin-top:18px">Six modules. One source of truth for go-to-market.</h2>
+      </div>
+      <p class="muted">Use the whole thing as your prospecting workspace, or plug single modules into your own product through the API.</p>
+    </div>
+    <div class="mods reveal">
+      <article class="mod"><span class="n">01</span><h3>Discover</h3><p>Natural-language search across companies and people. Build an ideal customer profile once, then let Tracue keep the list growing.</p><div class="tags"><span>ICP builder</span><span>Lookalikes</span><span>200+ filters</span></div></article>
+      <article class="mod"><span class="n">02</span><h3>Verify</h3><p>Real-time email and domain verification with a confidence score on every record. No more guessing whether an address is real.</p><div class="tags"><span>MX / SPF / DMARC</span><span>Catch-all</span><span>Bulk API</span></div></article>
+      <article class="mod"><span class="n">03</span><h3>Enrich</h3><p>Drop in a domain, a name or a whole CSV. Get back firmographics, technographics, roles and verified contact points in seconds.</p><div class="tags"><span>CSV</span><span>Webhook</span><span>Waterfall</span></div></article>
+      <article class="mod"><span class="n">04</span><h3>Signals</h3><p>Funding rounds, hiring spikes, leadership changes, new tech adopted. Know which accounts are ready to buy — this week, not last quarter.</p><div class="tags"><span>Hiring</span><span>Funding</span><span>Tech stack</span></div></article>
+      <article class="mod"><span class="n">05</span><h3>Engage</h3><span class="soon">Beta</span><p>Draft personal, relevant first messages with an AI copilot that actually knows the account, then send from your own inbox.</p><div class="tags"><span>AI copilot</span><span>Sequences</span><span>Deliverability</span></div></article>
+      <article class="mod"><span class="n">06</span><h3>Sync</h3><span class="soon">Beta</span><p>Two-way sync with your CRM and tools. Tracue becomes the always-fresh data layer underneath the workflow your team already runs.</p><div class="tags"><span>HubSpot</span><span>Salesforce</span><span>REST API</span></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section class="light steps">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2 class="h-l">From “who should we sell to?” to a booked call.</h2>
+    </div>
+    <div class="step-grid reveal">
+      <div class="step"><span class="k">1</span><h3>Describe your customer</h3><p>“Seed-to-Series B fintechs in Southeast Asia that just started hiring backend engineers.” That's the whole query.</p></div>
+      <div class="step"><span class="k">2</span><h3>Tracue does the digging</h3><p>We find the accounts, identify the decision-makers, clean the data and verify every contact point — in minutes, not weeks.</p></div>
+      <div class="step dark"><span class="k">3</span><h3>Reach out with context</h3><p>Send from your inbox, push to your CRM, or pipe it into your product. Every lead arrives with the reason it's a fit.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ENGINE (dark) -->
+<section class="engine" id="engine">
+  <div class="wrap">
+    <div class="sec-head reveal" style="margin-bottom:0">
+      <div>
+        <span class="label">Under the hood</span>
+        <h2 class="h-l" style="margin-top:18px">A data engine built for <span class="accent">accuracy</span>, not volume.</h2>
+      </div>
+      <p class="muted">Most data vendors sell you a big number. We'd rather sell you a true one. Every record flows through the same pipeline before it reaches your screen.</p>
+    </div>
+    <div class="pipe reveal">
+      <span class="packet"></span><span class="packet"></span><span class="packet"></span>
+      <div class="stage"><div class="o"><svg viewBox="0 0 24 24"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></div><h4>Collect</h4><p>Public web, registries and partner sources, gathered responsibly.</p></div>
+      <div class="stage"><div class="o"><svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg></div><h4>Clean</h4><p>De-duplicate, normalise and resolve entities from raw to clean.</p></div>
+      <div class="stage"><div class="o"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div><h4>Verify</h4><p>Domain and mailbox checks with a confidence score per record.</p></div>
+      <div class="stage"><div class="o"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg></div><h4>Score</h4><p>Match each account to your ICP and rank by buying signals.</p></div>
+      <div class="stage"><div class="o"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><h4>Deliver</h4><p>App, CSV, CRM or API — wherever your team works.</p></div>
+    </div>
+    <div class="specs reveal">
+      <div class="spec"><span class="label">Accuracy</span><h5>Verified or flagged. Never guessed.</h5><p>Each contact carries a status and a confidence score, so you decide what's safe to send.</p><ul><li>Catch-all &amp; disposable detection</li><li>Role vs. personal inbox tagging</li><li>Re-verification on a rolling schedule</li></ul></div>
+      <div class="spec"><span class="label">Privacy</span><h5>Compliance designed in, not bolted on.</h5><p>Built around data-protection principles from day one, with clear sourcing and easy opt-out.</p><ul><li>GDPR / CCPA-ready workflows</li><li>Public opt-out &amp; suppression lists</li><li>Data sourcing transparency</li></ul></div>
+      <div class="spec"><span class="label">Developers</span><h5>An API you'll actually enjoy.</h5><p>The same engine that powers the app, available to embed directly into your own product.</p><ul><li>REST + webhooks</li><li>Bulk jobs with progress callbacks</li><li>SDKs for JS &amp; Python (planned)</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="light roadmap" id="roadmap">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="label">Roadmap</span>
+        <h2 class="h-l" style="margin-top:18px">Building in public. Shipping March 2027.</h2>
+      </div>
+      <p class="muted">No reviews yet — we haven't launched. Instead, here's exactly where we are and where we're going. We'll keep this page honest as we move.</p>
+    </div>
+    <div class="track reveal">
+      <div class="track-line"><i style="--progress:32%"></i></div>
+      <div class="phases">
+        <div class="phase done"><span class="when">Aug 2026</span><h4>Day zero</h4><ul><li>Tracue founded</li><li>Customer discovery interviews</li><li>Architecture &amp; data strategy</li></ul><span class="status">Done</span></div>
+        <div class="phase now"><span class="when">Sep – Nov 2026</span><h4>Data foundation</h4><ul><li>Raw → clean data pipeline</li><li>Domain &amp; email verification engine</li><li>Local trials on sample cohorts</li></ul><span class="status">In progress</span></div>
+        <div class="phase"><span class="when">Dec 2026</span><h4>Private alpha</h4><ul><li>First design partners onboard</li><li>Discover &amp; Verify in the app</li><li>Enrichment API v0</li></ul><span class="status">Next</span></div>
+        <div class="phase"><span class="when">Jan – Feb 2027</span><h4>Closed beta</h4><ul><li>Signals &amp; ICP scoring</li><li>HubSpot / Salesforce sync</li><li>Chrome extension, usage pricing</li></ul><span class="status">Planned</span></div>
+        <div class="phase launch"><span class="when">March 2027</span><h4>Public launch — v1.0</h4><ul><li>Open sign-up &amp; free tier</li><li>Full platform + public API</li><li>Founding members go live</li></ul><span class="status">Launch</span></div>
+        <div class="phase"><span class="when">Q2 – Q4 2027</span><h4>Beyond v1</h4><ul><li>AI outreach copilot (Engage)</li><li>Intent data &amp; account alerts</li><li>Integrations marketplace, global expansion</li></ul><span class="status">Vision</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE -->
+<section class="light compare">
+  <div class="wrap">
+    <div class="sec-head reveal"><h2 class="h-l">Why not just buy another database?</h2><p class="muted">Because a list was never the goal. Reaching the right customer is.</p></div>
+    <div class="table reveal">
+      <div class="trow th"><span></span><span>Legacy data vendors</span><span>Tracue</span></div>
+      <div class="trow"><span class="k">Pricing</span><span class="old">Annual contracts, per-seat, sales call required</span><span class="new">Usage-based, starts free, cancel any time</span></div>
+      <div class="trow"><span class="k">Freshness</span><span class="old">Bulk refresh every few months</span><span class="new">Rolling re-verification, records never older than 30 days</span></div>
+      <div class="trow"><span class="k">Accuracy</span><span class="old">“Valid” means “we guessed the pattern”</span><span class="new">Domain + mailbox checks with a confidence score on every record</span></div>
+      <div class="trow"><span class="k">Coverage</span><span class="old">Strong in the US, thin elsewhere</span><span class="new">Built global-first, with deep coverage of Southeast Asia</span></div>
+      <div class="trow"><span class="k">Time to value</span><span class="old">Weeks of onboarding and training</span><span class="new">Type a sentence, get a verified list in minutes</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDING MEMBERS -->
+<section class="light founding" id="founding">
+  <div class="wrap">
+    <div class="found-card reveal">
+      <div>
+        <div class="found-l">
+          <span class="label">Founding member program</span>
+          <h2 class="h-l">Help shape Tracue. Get rewarded for life.</h2>
+          <p class="muted">We're inviting a small group of product teams to build Tracue with us before launch.</p>
+        </div>
+        <div class="perks">
+          <div class="perk"><span class="pn">50%</span><div><h5>Off your first year</h5><p>Locked-in founding pricing for as long as you stay.</p></div></div>
+          <div class="perk"><span class="pn">1:1</span><div><h5>A direct line to the founders</h5><p>Private channel, weekly builds, your feedback in the next release.</p></div></div>
+          <div class="perk"><span class="pn">Day 1</span><div><h5>First access to everything</h5><p>Alpha in December 2026, every new module before anyone else.</p></div></div>
+        </div>
+      </div>
+      <div class="found-r">
+        <span class="label">Founding seats</span>
+        <p class="h-m" style="margin-top:16px">Limited to the first <span class="accent">100 teams</span>.</p>
+        <div class="seats"><div class="bar"><i style="--w:27%"></i></div><div class="lbls"><span>Seats claimed</span><span>Closes at launch</span></div></div>
+        <a href="#waitlist" class="btn btn-white" style="margin-top:34px;align-self:flex-start">Apply for a seat <span class="arr">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="light faq" id="faq">
+  <div class="wrap faq-grid">
+    <div class="reveal"><span class="label">FAQ</span><h2 class="h-l" style="margin-top:18px">Questions, answered.</h2></div>
+    <div class="reveal">
+      <details open><summary>What exactly is Tracue?<span class="pm">+</span></summary><p>Tracue is a go-to-market intelligence platform. It helps companies that build products find the businesses and decision-makers who need what they've built, verify how to reach them, and start the conversation — all in one place.</p></details>
+      <details><summary>When can I use it?<span class="pm">+</span></summary><p>We started building in August 2026. A private alpha opens to design partners in December 2026, closed beta follows in early 2027, and v1.0 launches publicly in March 2027. Join the waitlist to get in early.</p></details>
+      <details><summary>How much will it cost?<span class="pm">+</span></summary><p>There will be a free tier, then usage-based plans — you pay for verified data you actually use, not for seats. Founding members get 50% off their first year, locked in.</p></details>
+      <details><summary>Where does the data come from?<span class="pm">+</span></summary><p>From publicly available sources, business registries and partner datasets, processed through our own clean-and-verify pipeline. We're transparent about sourcing and honor opt-out requests.</p></details>
+      <details><summary>Is it compliant with privacy laws?<span class="pm">+</span></summary><p>Privacy is a design principle for us, not an afterthought. Tracue is being built around GDPR and CCPA principles, with suppression lists, opt-out handling and clear data provenance.</p></details>
+      <details><summary>Can I become a design partner?<span class="pm">+</span></summary><p>Yes — that's exactly what the founding member program is for. Leave your email below and tell us a little about your product. We'll reach out personally.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="waitlist">
+  <div class="glow"></div>
+  <div class="wrap cta-in reveal">
+    <span class="pill label"><span class="dot"></span>Waitlist open</span>
+    <h2 class="h-xl">Be first in line.</h2>
+    <p class="cta-sub">Get early access, founding member pricing and a front-row seat as we build. No spam — just launch news and the occasional build update.</p>
+    <form class="wl" id="wl" novalidate>
+      <input type="email" name="email" placeholder="Work email" required autocomplete="email" aria-label="Work email">
+      <input type="text" name="company" placeholder="Company or product" autocomplete="organization" aria-label="Company or product">
+      <button class="btn btn-white" type="submit">Join waitlist <span class="arr">→</span></button>
+    </form>
+    <p class="form-note" id="formNote" role="status"></p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a href="#top" class="logo"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="#FF7A00" stroke-width="2" stroke-dasharray="47 16" transform="rotate(-50 12 12)"/><circle cx="12" cy="12" r="4.2" fill="#FF7A00"/></svg>tracue</a>
+        <p>Go-to-market intelligence for teams that build products. Find, verify and reach the customers your product was built for.</p>
+      </div>
+      <div><h6>Product</h6><ul><li><a href="#platform">Platform</a></li><li><a href="#engine">Data engine</a></li><li><a href="#roadmap">Roadmap</a></li><li><a href="#founding">Early access</a></li></ul></div>
+      <div><h6>Company</h6><ul><li><a href="#why">Why Tracue</a></li><li><a href="#faq">FAQ</a></li><li><a href="mailto:hello@tracue.com">Contact</a></li></ul></div>
+      <div><h6>Status</h6><ul><li>Founded Aug 2026</li><li>Alpha Dec 2026</li><li>Launch Mar 2027</li></ul></div>
+    </div>
+    <div class="giant" aria-hidden="true">tracue</div>
+    <div class="legal"><span>© <span id="yr">2026</span> Tracue. All rights reserved.</span><span>Product previews are concepts and may change before launch.</span></div>
+  </div>
+</footer>
+
+<script>
+/* Waitlist: set WAITLIST_ENDPOINT to a form backend (e.g. Formspree) to collect sign-ups.
+   While empty, the form falls back to opening an email to hello@tracue.com. */
+const WAITLIST_ENDPOINT = "";
+const WAITLIST_EMAIL = "hello@tracue.com";
+
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// nav background + mobile menu
+const nav = document.getElementById('nav');
+const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 20);
+onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+const burger = document.getElementById('burger'), menu = document.getElementById('mobileMenu');
+burger.addEventListener('click', () => { const o = menu.classList.toggle('open'); burger.setAttribute('aria-expanded', o); });
+menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { menu.classList.remove('open'); burger.setAttribute('aria-expanded', false); }));
+
+// reveal on scroll + counters
+const countUp = el => {
+  const end = +el.dataset.count, suf = el.dataset.suffix || '', t0 = performance.now(), d = 1600;
+  const tick = t => { const p = Math.min(1, (t - t0) / d), e = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(end * e) + suf; if (p < 1) requestAnimationFrame(tick); };
+  requestAnimationFrame(tick);
+};
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  e.target.classList.add('in');
+  e.target.querySelectorAll('[data-count]').forEach(countUp);
+  io.unobserve(e.target);
+}), {threshold:.15});
+document.querySelectorAll('.reveal, #mock').forEach(el => io.observe(el));
+
+// typing effect in the mock search bar
+const phrases = ['raised in last 90 days', 'uses Stripe', 'new VP Sales', 'expanding to Vietnam'];
+const typed = document.getElementById('typed');
+let pi = 0, ci = 0, del = false;
+(function type(){
+  const w = phrases[pi];
+  typed.textContent = w.slice(0, ci);
+  if (!del && ci < w.length) ci++;
+  else if (!del) { del = true; return setTimeout(type, 1600); }
+  else if (ci > 0) ci--;
+  else { del = false; pi = (pi + 1) % phrases.length; }
+  setTimeout(type, del ? 35 : 70);
+})();
+
+// hero signal network
+(() => {
+  const c = document.getElementById('signal'), x = c.getContext('2d');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let W, H, pts = [], dpr = Math.min(2, window.devicePixelRatio || 1);
+  const init = () => {
+    W = c.clientWidth; H = c.clientHeight; c.width = W * dpr; c.height = H * dpr; x.setTransform(dpr,0,0,dpr,0,0);
+    const n = Math.round(Math.min(110, W * H / 14000));
+    pts = Array.from({length:n}, () => ({x:Math.random()*W, y:Math.random()*H, vx:(Math.random()-.5)*.25, vy:(Math.random()-.5)*.25, hot:Math.random()<.12, p:Math.random()*Math.PI*2}));
+  };
+  const draw = () => {
+    x.clearRect(0,0,W,H);
+    for (let i = 0; i < pts.length; i++) {
+      const a = pts[i];
+      for (let j = i + 1; j < pts.length; j++) {
+        const b = pts[j], dx = a.x-b.x, dy = a.y-b.y, d = dx*dx+dy*dy;
+        if (d < 150*150) {
+          const o = 1 - Math.sqrt(d)/150;
+          x.strokeStyle = (a.hot && b.hot) ? `rgba(255,122,0,${o*.5})` : `rgba(255,255,255,${o*.07})`;
+          x.lineWidth = 1; x.beginPath(); x.moveTo(a.x,a.y); x.lineTo(b.x,b.y); x.stroke();
+        }
+      }
+    }
+    for (const p of pts) {
+      p.p += .03;
+      if (p.hot) {
+        const r = 2.4 + Math.sin(p.p)*.8;
+        x.fillStyle = 'rgba(255,122,0,.18)'; x.beginPath(); x.arc(p.x,p.y,r*4,0,7); x.fill();
+        x.fillStyle = '#FF7A00'; x.beginPath(); x.arc(p.x,p.y,r,0,7); x.fill();
+      } else { x.fillStyle = 'rgba(255,255,255,.35)'; x.beginPath(); x.arc(p.x,p.y,1.2,0,7); x.fill(); }
+      if (!reduce) { p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > W) p.vx *= -1; if (p.y < 0 || p.y > H) p.vy *= -1; }
+    }
+    if (!reduce) requestAnimationFrame(draw);
+  };
+  init(); draw();
+  let t; window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { init(); if (reduce) draw(); }, 150); });
+})();
+
+// waitlist form
+const form = document.getElementById('wl'), note = document.getElementById('formNote');
+form.addEventListener('submit', async ev => {
+  ev.preventDefault();
+  const email = form.email.value.trim(), company = form.company.value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { note.className = 'form-note'; note.textContent = 'Please enter a valid work email.'; form.email.focus(); return; }
+  if (WAITLIST_ENDPOINT) {
+    try {
+      const r = await fetch(WAITLIST_ENDPOINT, {method:'POST', headers:{'Accept':'application/json','Content-Type':'application/json'}, body:JSON.stringify({email, company})});
+      if (!r.ok) throw new Error();
+      form.reset(); note.className = 'form-note ok'; note.textContent = "You're on the list. We'll be in touch before launch.";
+    } catch { note.className = 'form-note'; note.textContent = 'Something went wrong — please email ' + WAITLIST_EMAIL + '.'; }
+  } else {
+    const body = encodeURIComponent(`Please add me to the Tracue waitlist.\n\nEmail: ${email}\nCompany/product: ${company}`);
+    window.location.href = `mailto:${WAITLIST_EMAIL}?subject=${encodeURIComponent('Tracue waitlist')}&body=${body}`;
+    note.className = 'form-note ok'; note.textContent = 'Opening your email app to confirm your spot…';
+  }
+});
+</script>
+</body>
+</html>
